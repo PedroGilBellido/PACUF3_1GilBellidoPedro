@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Pedro Bellido. Desarrollador Fronted">
+    <title>Configuración de Samba</title>
+    <link rel="stylesheet" href="samba.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <!--Aqui va una etiqueta de imagen, igual utilizo un mapeado-->
+        <div class="Contenedor">
+            <nav>
+                <ul>
+                    <li><a href="Pagina_principal.html">Inicio</a></li>
+                </ul>
+            </nav>
+
+            <h1>Instalación y configuración de Samba</h1>
+            <p>
+            <h3> Explicación </h3>
+            </p>
+            <div class="row">
+                <div class="Columna1">
+                    <p>
+                        A continuación te mostraremos cómo puedes realizar la instalación y configuración de Samba.
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="Columna3">
+                    <h2>2.Instalación y configuración de Samba.</h2>
+
+                    <p>Primero nos aseguramos de que tenemos completamente actualizados ambos sistemas: Windows y Ubuntu</p>
+                    <img src="Paso1.PNG" class="Samba" width="600" />
+                    </p>
+                    
+                    <br>
+
+                    <p>Instalamos Samba con el comando apt install samba</p>
+                    <img src="Paso2.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Creamos un nuevo usuario para conectarnos y compartir documentos con el comando Adduser winuser y clickamos hacia delante.</p>
+                    <img src="Paso3.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Nos logamos como usuario y vamos a la carpeta personal, creamos una nueva compartida a la que le damos permiso por medio de: su winuser -> cd -> cd winuser -> mkdir carpeta compartida -> chmod777 carpeta compartida/.
+                    </p>
+                    <img src="Paso4.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Como administrador instalamos vim.</p>
+                    <img src="Paso5.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Cuando está instalado, como root editamos con vim el archivo de configuración por medio de vim/etc/samba/smb.conf</p>
+                    <img src="Paso6.PNG" class="Samba" width="600" />
+                    </p>
+                    
+                    <br>
+
+                    <p></p>
+                    <img src="Paso6B.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p></p>
+                    <img src="Paso6C.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p></p>
+                    <img src="Paso6D.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p></p>
+                    <img src="Paso6E.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Cuando está instalado, como root editamos con vim el archivo de configuración:
+                        ● Vim /etc/samba/smb.conf-></p>
+                    <img src="Paso7.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Dentro de Vim vamos al final y escribimos al final del documento (tecla Insert)
+                        ● [Compartida]
+                        o path = /home/winuser/compartida
+                        o browseable = yes
+                        o read only = no
+                        o valid users = winuser
+                        </p>
+                    <img src="Paso8.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Salimos de vim pulsando escape y escribiendo:
+                        ● :wq-> (write, quit)
+                        </p>
+                    <img src="Paso9.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Ahora tenemos que añadir a winuser a los usuarios de samba y ponerle una contraseña (seguimos como
+                        root):
+                        ● smbpasswd a winuser-></p>
+                    <img src="Paso10.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Ahora nos cambiamos al usuario winuser para crear un archivo dentro de la carpeta compartida.
+                        ● su winuser->
+                        ● cd ..->
+                        ● cd winuser/compartida/->
+                        ● touch archivo-linux->
+                        </p>
+                    <img src="Paso11.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Ya solo nos queda resetear el servicio samba desde root.
+                        ● su -> (contraseña)
+                        ● systemctl restart smbd.service-> (Si nos diera error porque no estuviera en ejecución:
+                        reload-or-restart)</p>
+                    <img src="Paso12.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Ahora miramos la dirección ip de la máquina (la otorga virtualbox) y la anotamos
+                        ● ip a-> (o ifconfig) (inet) buscamos la ip (iplinux)
+                        </p>
+                    <img src="Paso13.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                    <p>Nos vamos a Windows y habilitamos el uso compartido de archivos y carpetas y dentro de la
+                        configuración avanzada del firewall habilitamos todas las reglas de “Archivos e impresoras compartidos”
+                        Probamos que tenemos ping y si es así, abrimos ejecutar y escribimos //iplinux/compartida
+                        </p>
+                    <img src="Paso14.PNG" class="Samba" width="600" />
+                    </p>
+
+                    <br>
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <footer>© 2024 Todos los derechos reservados de Mi primer HOW TO</footer>
+            <br>
+            <br>
+        </div>
+    </header>
+</body>
+
+</html>
